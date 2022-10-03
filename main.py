@@ -15,7 +15,7 @@ def binary_search(list, search_item):
         else:
             return list[midpointer]
     return None                             # Ifall vi aldrig hittade ett passande värde returneras None
-
+"""
 
 # Indata är en fil på angivet format, returnerar filen som en lista.
 def list_reader(input_file):
@@ -52,4 +52,54 @@ def main(input_file):
         key = input().strip()
 
 main_med_fil("Task1_file.txt")
-#print(list_reader("Task1_file.txt"))
+#print(list_reader("Task1_file.txt"))"""
+
+# Uppgift 2
+
+# En Class som representerar en låt. Construktorn tar en sträng från filen.
+class Song():
+    def __init__(self, string):
+        list = string.split("<SEP>")
+        [i.strip() for i in list]
+        self.trackid = list[0]
+        self.song_length = list[1]
+        self.artist = list[2]
+        self.title = list[3]
+    def __lt__(self, other):
+        self.artist < other.artist
+
+    def __str__(self):
+        return self.title
+
+"""ex_string = "TRMMMBB12903CB7D21<SEP>SOEYRFT12AB018936C<SEP>Kris Kross<SEP>2 Da Beat Ch'yall"
+ex_object = Song(ex_string)
+print(ex_object)"""
+
+# Funktion som tar emot en fil och skapar en lista som innehåller sångobjekt från klassen Song.
+def creator_of_songlistobject(file):
+    with open(file) as song_file:
+        song_object_list = []
+        for line in song_file:
+            song_object_list.append(Song(line))
+    return song_object_list
+
+
+
+
+def linear_search(list, artist):
+    for object in list:
+        if object.artist == artist:
+            return True
+    return False
+
+def main(file):
+    import timeit as timeit
+    list_of_songobjects = creator_of_songlistobject(file)
+    n = len(list_of_songobjects)
+    print("Antal element =", n)
+    last = list_of_songobjects[n-1]
+    searched_artist = last.artist
+    linjtid = timeit.timeit(stmt = lambda: linear_search(list_of_songobjects, searched_artist), number = 10000)
+    print("Linjärsökningen tog", round(linjtid, 4) , "sekunder")
+
+main("unique_tracks_mini.txt")

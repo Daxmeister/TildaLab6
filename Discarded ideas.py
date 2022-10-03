@@ -22,3 +22,10 @@ def binary_search_sortofrecursive(list, search_item):
         elif search_item < list[midpoint]:
             list = list[:midpoint]
     return None
+
+# Funktion som läser in filen till en lista med strängar för varje rad.
+def readfile(file):
+    with open(file) as song_file:
+        song_list = song_file.readlines()
+        [i.strip() for i in song_list]
+    return song_list
