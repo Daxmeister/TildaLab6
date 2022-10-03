@@ -72,7 +72,7 @@ class Song():
         self.artist == other.artist
 
     def __str__(self):
-        return self.title
+        return self.artist
 
     def __hash__(self):
         return hash(self.artist)
@@ -99,19 +99,21 @@ def linear_search(list, artist):
     return False
 
 
+# Skapar en dictionary med key artistnamn och value objektet som tillhör.
 def create_dictionary(list_with_objects):
     dictionary = {}
     for object in list_with_objects:
         dictionary[object.artist] = object
     return dictionary
 
-def dictionary_search(dictionary, searched_object):
-    if searched_object in dictionary:
-        return searched_object.artist
+def dictionary_search(dictionary, artist_name):
+    if artist_name in dictionary:
+        return artist_name
+    else:
+        return None
 
 
-
-def main(file):
+def main_compare_searches(file):
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
     n = len(list_of_songobjects)
@@ -128,8 +130,8 @@ def main(file):
 
     # Del 3
     hash_table = create_dictionary(list_of_songobjects)
-    bintid = timeit.timeit(stmt=lambda: dictionary_search(list_of_songobjects, last), number=10000)
+    bintid = timeit.timeit(stmt=lambda: dictionary_search(hash_table, searched_artist), number=10000)
     print("Hashsökningen tog", round(bintid, 4), "sekunder")
 
 
-main("unique_tracks_mini.txt")
+main_compare_searches("unique_tracks.txt")
