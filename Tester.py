@@ -21,22 +21,19 @@ def create_list_of_keywords(input_file):
 
 
 def binary_search(list, search_item):
+    # Skapar tre pekare, vi kommer söka mellan low och high.
     low = 0
     high = len(list) - 1
-    mid = 0
+    midpointer = 0
     while low <= high:
-        mid = (high + low) // 2
-        # If x is greater, ignore left half
-        if list[mid] < search_item:
-            low = mid + 1
-        # If x is smaller, ignore right half
-        elif list[mid] > search_item:
-            high = mid - 1
-        # means x is present at mid
+        midpointer = (high + low) // 2 # Hittar mitten på den delen av listan vi undersöker.
+        if list[midpointer] < search_item:  # Om värdet som finns i mitten inte passar
+            low = midpointer + 1            # kommer vi sätta nya gränser som vi undersöker.
+        elif list[midpointer] > search_item:
+            high = midpointer - 1
         else:
-            return list[mid]
-    # If we reach here, then the element was not present
-    return False
+            return list[midpointer]
+    return None
 
 
 def main_med_fil(file):

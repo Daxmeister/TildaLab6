@@ -68,6 +68,9 @@ class Song():
     def __lt__(self, other):
         self.artist < other.artist
 
+    def __eq__(self, other):
+        self.artist == other.artist
+
     def __str__(self):
         return self.title
 
@@ -92,6 +95,8 @@ def linear_search(list, artist):
             return True
     return False
 
+
+
 def main(file):
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
@@ -101,5 +106,10 @@ def main(file):
     searched_artist = last.artist
     linjtid = timeit.timeit(stmt = lambda: linear_search(list_of_songobjects, searched_artist), number = 10000)
     print("Linjärsökningen tog", round(linjtid, 4) , "sekunder")
+
+    # Del 2 binärsökning börjar här
+    list_of_songobjects.sort()
+    bintid = timeit.timeit(stmt=lambda: binary_search(list_of_songobjects, searched_artist), number=10000)
+    print("Linjärsökningen tog", round(bintid, 4), "sekunder")
 
 main("unique_tracks_mini.txt")
