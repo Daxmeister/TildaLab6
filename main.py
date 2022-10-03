@@ -74,6 +74,9 @@ class Song():
     def __str__(self):
         return self.title
 
+    def __hash__(self):
+        return hash(self.artist)
+
 """ex_string = "TRMMMBB12903CB7D21<SEP>SOEYRFT12AB018936C<SEP>Kris Kross<SEP>2 Da Beat Ch'yall"
 ex_object = Song(ex_string)
 print(ex_object)"""
@@ -92,8 +95,19 @@ def creator_of_songlistobject(file):
 def linear_search(list, artist):
     for object in list:
         if object.artist == artist:
-            return True
+            return object.artist
     return False
+
+
+def create_dictionary(list_with_objects):
+    dictionary = {}
+    for object in list_with_objects:
+        dictionary[object.artist] = object
+    return dictionary
+
+def dictionary_search(dictionary, searched_object):
+    if searched_object in dictionary:
+        return searched_object.artist
 
 
 
@@ -107,9 +121,15 @@ def main(file):
     linjtid = timeit.timeit(stmt = lambda: linear_search(list_of_songobjects, searched_artist), number = 10000)
     print("Linjärsökningen tog", round(linjtid, 4) , "sekunder")
 
-    # Del 2 binärsökning börjar här
+    # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
     list_of_songobjects.sort()
-    bintid = timeit.timeit(stmt=lambda: binary_search(list_of_songobjects, searched_artist), number=10000)
-    print("Linjärsökningen tog", round(bintid, 4), "sekunder")
+    bintid = timeit.timeit(stmt=lambda: binary_search(list_of_songobjects, last), number=10000)
+    print("Binärsökningen tog", round(bintid, 4), "sekunder")
+
+    # Del 3
+    hash_table = create_dictionary(list_of_songobjects)
+    bintid = timeit.timeit(stmt=lambda: dictionary_search(list_of_songobjects, last), number=10000)
+    print("Hashsökningen tog", round(bintid, 4), "sekunder")
+
 
 main("unique_tracks_mini.txt")

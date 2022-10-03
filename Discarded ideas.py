@@ -29,3 +29,13 @@ def readfile(file):
         song_list = song_file.readlines()
         [i.strip() for i in song_list]
     return song_list
+
+
+def create_hash_table(list):
+    hash_table = {}
+    for object in list:
+        hash_table[hash(object.artist)] = object
+    return hash_table
+
+def hash_sökning(list, artist):
+    pass
