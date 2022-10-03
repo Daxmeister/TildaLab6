@@ -2,18 +2,19 @@
 
 # Tar en lista och ett sökord som input. Returnerar föremålet om det finns, annars False.
 def binary_search(list, search_item):
+    # Skapar tre pekare, vi kommer söka mellan low och high.
     low = 0
     high = len(list) - 1
     midpointer = 0
     while low <= high:
-        midpointer = (high + low) // 2
-        if list[midpointer] < search_item:
-            low = midpointer + 1
+        midpointer = (high + low) // 2 # Hittar mitten på den delen av listan vi undersöker.
+        if list[midpointer] < search_item:  # Om värdet som finns i mitten inte passar
+            low = midpointer + 1            # kommer vi sätta nya gränser som vi undersöker.
         elif list[midpointer] > search_item:
             high = midpointer - 1
         else:
             return list[midpointer]
-    return False
+    return None                             # Ifall vi aldrig hittade ett passande värde returneras None
 
 
 # Indata är en fil på angivet format, returnerar filen som en lista.
@@ -30,8 +31,6 @@ def create_list_of_keywords(input_file):
         first_line = file.readline()
         list_of_keywords = file.readlines()
         [i.strip() for i in list_of_keywords]
-
-
     return list_of_keywords
 
 def main_med_fil(file):
