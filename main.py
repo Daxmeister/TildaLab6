@@ -25,6 +25,7 @@ def list_reader(input_file):
         sorted_list = first_line.split(" ")
     return sorted_list
 
+
 def create_list_of_keywords(input_file):
     list_of_keywords = []
     with open(input_file) as file:
@@ -58,6 +59,7 @@ main_med_fil("Task1_file.txt")
 
 # En Class som representerar en låt. Construktorn tar en sträng från filen.
 class Song():
+
     def __init__(self, string):
         list = string.split("<SEP>")
         [i.strip() for i in list]
@@ -87,13 +89,9 @@ class Song():
     def __repr__(self):
         return str ("Object " + self.artist)
 
+    # Om man försöker hasha objectet baseras det på artisten
     def __hash__(self):
         return hash(self.artist)
-
-
-"""ex_string = "TRMMMBB12903CB7D21<SEP>SOEYRFT12AB018936C<SEP>Kris Kross<SEP>2 Da Beat Ch'yall"
-ex_object = Song(ex_string)
-print(ex_object)"""
 
 # Funktion som tar emot en fil och skapar en lista som innehåller sångobjekt från klassen Song.
 def creator_of_songlistobject(file):
@@ -110,7 +108,6 @@ def linear_search(list, artist):
             return object.artist
     return None
 
-
 # Skapar en dictionary med key artistnamn och value objektet som tillhör.
 def create_dictionary(list_with_objects):
     dictionary = {}
@@ -118,18 +115,19 @@ def create_dictionary(list_with_objects):
         dictionary[object.artist] = object
     return dictionary
 
+# Vi söker i en dicitonary, det får motsvara hash-sökning
 def dictionary_search(dictionary, artist_name):
     if artist_name in dictionary:
         return artist_name
     else:
         return None
 
-# Jämför olika sökstrategier
+# Jämför olika sökstrategier.
 def main_compare_searches(file):
     # Setup
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
-    list_of_songobjects = list_of_songobjects[0:250000]       # Denna rad kan användas för att korta ned listan
+    #list_of_songobjects = list_of_songobjects[0:250000]       # Denna rad kan användas för att korta ned listan
     n = len(list_of_songobjects)
     print("Antal element =", n)
     last = list_of_songobjects[n-1]
@@ -150,11 +148,11 @@ def main_compare_searches(file):
     print("Hashsökningen tog", round(bintid, 4), "sekunder")
 
 
-#main_compare_searches("unique_tracks.txt")
+# main_compare_searches("unique_tracks.txt")
 
 # Del 3 (Sortering) --------------------------------------------------------------------------------------------------
 
-# Tar in en lista och sortrar. Kod hämtad från föreläsning.
+# Tar in en lista och sorterar. Kod hämtad från föreläsning.
 def urvalssortera(data):
     n = len(data)
     for i in range(n):
@@ -164,7 +162,7 @@ def urvalssortera(data):
                 minst = j
         data[minst], data[i] = data[i], data[minst]
 
-# Quicksort hämtat från kursboken
+# Quicksort hämtat från kursboken. Vi väljer cut-off värden där vi sorterar in i över och under den. Det upprepas.
 def quickSort(alist):
    quickSortHelper(alist,0,len(alist)-1)
 
@@ -203,15 +201,9 @@ def partition(alist,first,last):
    alist[first] = alist[rightmark]
    alist[rightmark] = temp
 
-
    return rightmark
 
-'''song_list = creator_of_songlistobject("unique_tracks_mini.txt")
-print(song_list)
-
-song_list = bubbelsortera(song_list)
-print(song_list)'''
-
+# Funktionen som jämför sorteringsmetoder
 def main_compare_sorting(file):
     # Setup
     import timeit as timeit
@@ -231,6 +223,14 @@ def main_compare_sorting(file):
 
 main_compare_sorting("unique_tracks.txt")
 
+
+# Linjärsökning ökar inte riktigt men närmast linjärt. Rimligt.
+# Binärsökningen däremot är längst när den är 500 000.
+# En teori är att vi i 250 000 har en relativt kort lista att ta oss igenom,
+# i 1000000 har vi med fallet vi söker och hittar det hyfsat snabbt,
+# kanske är 500 000 (som inte inkluderar sökta fallet) både
+# långt att söka igenom och samtidigt måste vi kolla på alla för att hitta vårt fall.
+# Hashsökningen är konstant i söktid, som sig bör (med reservation för krockar).
 
 # Tiden är ordo(n^2) för urvalssortering, den skenar snabbt
 # Tiden är ordo(nlogn) för quicksort, den ökar i något som inte är långt ifrån linjärt.
