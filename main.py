@@ -230,3 +230,6 @@ def main_compare_sorting(file):
     print("URvalssortering tog", round(urvsort, 4), "sekunder")'''
 
 main_compare_sorting("unique_tracks.txt")
+
+
+#FÖRÄNDRINGAR
