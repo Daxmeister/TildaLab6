@@ -89,14 +89,12 @@ def creator_of_songlistobject(file):
             song_object_list.append(Song(line))
     return song_object_list
 
-
-
-
+# Tar lista med object och str på artist som sökes och returnerar str eller None
 def linear_search(list, artist):
     for object in list:
         if object.artist == artist:
             return object.artist
-    return False
+    return None
 
 
 # Skapar en dictionary med key artistnamn och value objektet som tillhör.
@@ -112,14 +110,18 @@ def dictionary_search(dictionary, artist_name):
     else:
         return None
 
-
+# Jämför olika sökstrategier
 def main_compare_searches(file):
+    # Setup
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
+    # list_of_songobjects = list_of_songobjects[0:250000]       # Denna rad kan användas för att korta ned listan
     n = len(list_of_songobjects)
     print("Antal element =", n)
     last = list_of_songobjects[n-1]
     searched_artist = last.artist
+
+    # Del 1
     linjtid = timeit.timeit(stmt = lambda: linear_search(list_of_songobjects, searched_artist), number = 10000)
     print("Linjärsökningen tog", round(linjtid, 4) , "sekunder")
 
