@@ -47,11 +47,17 @@ class Song():
     def __lt__(self, other):
         return self.artist < other.artist
 
+    def __le__(self, other):
+        return self.artist <= other.artist
+
     def __eq__(self, other):
         return self.artist == other.artist
 
     def __gt__(self, other):
         return self.artist > other.artist
+
+    def __ge__(self, other):
+        return self.artist >= other.artist
 
     def __str__(self):
         return self.artist
@@ -64,10 +70,10 @@ class Song():
 
 list_of_songobjects = creator_of_songlistobject("unique_tracks_mini.txt")
 list = [2, 4, 1, 5, 2, 5]
-urvalssortera(list)
+'''urvalssortera(list)
 print(list_of_songobjects)
 urvalssortera(list_of_songobjects)
-print(list_of_songobjects)
+print(list_of_songobjects)'''
 
 def is_greater(object1, object2):
     if object1 > object2:
@@ -79,3 +85,50 @@ def is_greater(object1, object2):
 
 #is_greater()
 is_greater(list_of_songobjects[2], list_of_songobjects[4])
+
+
+
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+
+       splitpoint = partition(alist,first,last)
+
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
+
+
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+
+   leftmark = first+1
+   rightmark = last
+
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+
+
+   return rightmark
+
+print(list_of_songobjects)
+quickSort(list_of_songobjects)
+print(list_of_songobjects)

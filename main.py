@@ -69,11 +69,17 @@ class Song():
     def __lt__(self, other):
         return self.artist < other.artist
 
+    def __le__(self, other):
+        return self.artist <= other.artist
+
     def __eq__(self, other):
         return self.artist == other.artist
 
     def __gt__(self, other):
         return self.artist > other.artist
+
+    def __ge__(self, other):
+        return self.artist >= other.artist
 
     def __str__(self):
         return self.artist
@@ -83,6 +89,7 @@ class Song():
 
     def __hash__(self):
         return hash(self.artist)
+
 
 """ex_string = "TRMMMBB12903CB7D21<SEP>SOEYRFT12AB018936C<SEP>Kris Kross<SEP>2 Da Beat Ch'yall"
 ex_object = Song(ex_string)
@@ -157,22 +164,69 @@ def urvalssortera(data):
                 minst = j
         data[minst], data[i] = data[i], data[minst]
 
-def bubbelsortera(data):
-    n = len(data)
-    bytt = True
-    while bytt:
-        bytt = False
-        for i in range(n-1):
-            if data[i] > data[i+1]:
-                data[i], data[i+1] = data[i+1], data[i]
-                bytt = True
-    return data
+# Quicksort hämtat från kursboken
+def quickSort(alist):
+   quickSortHelper(alist,0,len(alist)-1)
+
+def quickSortHelper(alist,first,last):
+   if first<last:
+
+       splitpoint = partition(alist,first,last)
+
+       quickSortHelper(alist,first,splitpoint-1)
+       quickSortHelper(alist,splitpoint+1,last)
 
 
-song_list = creator_of_songlistobject("unique_tracks_mini.txt")
+def partition(alist,first,last):
+   pivotvalue = alist[first]
+
+   leftmark = first+1
+   rightmark = last
+
+   done = False
+   while not done:
+
+       while leftmark <= rightmark and alist[leftmark] <= pivotvalue:
+           leftmark = leftmark + 1
+
+       while alist[rightmark] >= pivotvalue and rightmark >= leftmark:
+           rightmark = rightmark -1
+
+       if rightmark < leftmark:
+           done = True
+       else:
+           temp = alist[leftmark]
+           alist[leftmark] = alist[rightmark]
+           alist[rightmark] = temp
+
+   temp = alist[first]
+   alist[first] = alist[rightmark]
+   alist[rightmark] = temp
+
+
+   return rightmark
+
+'''song_list = creator_of_songlistobject("unique_tracks_mini.txt")
 print(song_list)
 
 song_list = bubbelsortera(song_list)
-print(song_list)
+print(song_list)'''
 
 def main_compare_sorting(file):
+    # Setup
+    import timeit as timeit
+    list_of_songobjects = creator_of_songlistobject(file)
+    list_of_songobjects = list_of_songobjects[0:1000]  # Denna rad kan användas för att korta ned listan
+    n = len(list_of_songobjects)
+    print("Antal element =", n)
+
+    # Del 1
+    quickso = timeit.timeit(stmt=lambda: quickSort(list_of_songobjects), number=1)
+    print("Quicksort tog", round(quickso, 4), "sekunder")
+
+    # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
+    list_of_songobjects.sort()
+    urvsort = timeit.timeit(stmt=lambda: urvalssortera(list_of_songobjects), number=1)
+    print("URvalssortering tog", round(urvsort, 4), "sekunder")
+
+main_compare_sorting("unique_tracks.txt")
