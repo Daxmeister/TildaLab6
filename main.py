@@ -216,7 +216,7 @@ def main_compare_sorting(file):
     # Setup
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
-    list_of_songobjects = list_of_songobjects[0:1000]  # Denna rad kan användas för att korta ned listan
+    list_of_songobjects = list_of_songobjects[0:10000]  # Denna rad kan användas för att korta ned listan
     n = len(list_of_songobjects)
     print("Antal element =", n)
 
@@ -224,9 +224,9 @@ def main_compare_sorting(file):
     quickso = timeit.timeit(stmt=lambda: quickSort(list_of_songobjects), number=1)
     print("Quicksort tog", round(quickso, 4), "sekunder")
 
-    # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
+'''    # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
     list_of_songobjects.sort()
     urvsort = timeit.timeit(stmt=lambda: urvalssortera(list_of_songobjects), number=1)
-    print("URvalssortering tog", round(urvsort, 4), "sekunder")
+    print("URvalssortering tog", round(urvsort, 4), "sekunder")'''
 
 main_compare_sorting("unique_tracks.txt")
