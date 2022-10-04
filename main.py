@@ -135,7 +135,7 @@ def main_compare_searches(file):
     # Setup
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
-    #list_of_songobjects = list_of_songobjects[0:250000]       # Denna rad kan användas för att korta ned listan
+    list_of_songobjects = list_of_songobjects[0:500000]       # Denna rad kan användas för att korta ned listan
     n = len(list_of_songobjects)
     print("Antal element =", n)
     last = list_of_songobjects[n-1]
@@ -145,7 +145,7 @@ def main_compare_searches(file):
     linjtid = timeit.timeit(stmt = lambda: linear_search(list_of_songobjects, searched_artist), number = 10000)
     print("Linjärsökningen tog", round(linjtid, 4) , "sekunder")
 
-    '''# Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
+    # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
     list_of_songobjects.sort()
     bintid = timeit.timeit(stmt=lambda: binary_search(list_of_songobjects, last), number=10000)
     print("Binärsökningen tog", round(bintid, 4), "sekunder")
@@ -153,7 +153,7 @@ def main_compare_searches(file):
     # Del 3
     hash_table = create_dictionary(list_of_songobjects)
     bintid = timeit.timeit(stmt=lambda: dictionary_search(hash_table, searched_artist), number=10000)
-    print("Hashsökningen tog", round(bintid, 4), "sekunder")'''
+    print("Hashsökningen tog", round(bintid, 4), "sekunder")
 
 
 main_compare_searches("unique_tracks.txt")
