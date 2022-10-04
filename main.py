@@ -230,3 +230,7 @@ def main_compare_sorting(file):
     print("URvalssortering tog", round(urvsort, 4), "sekunder")
 
 main_compare_sorting("unique_tracks.txt")
+
+
+# Tiden är ordo(n^2) för urvalssortering, den skenar snabbt
+# Tiden är ordo(nlogn) för quicksort, den ökar i något som inte är långt ifrån linjärt.
