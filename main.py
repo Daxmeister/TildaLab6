@@ -54,7 +54,7 @@ def main(input_file):
 main_med_fil("Task1_file.txt")
 #print(list_reader("Task1_file.txt"))"""
 
-# Uppgift 2
+# Uppgift 2 -----------------------------------------------------------------------------------------------------------
 
 # En Class som representerar en låt. Construktorn tar en sträng från filen.
 class Song():
@@ -65,14 +65,21 @@ class Song():
         self.song_length = list[1]
         self.artist = list[2]
         self.title = list[3]
+
     def __lt__(self, other):
-        self.artist < other.artist
+        return self.artist < other.artist
 
     def __eq__(self, other):
-        self.artist == other.artist
+        return self.artist == other.artist
+
+    def __gt__(self, other):
+        return self.artist > other.artist
 
     def __str__(self):
         return self.artist
+
+    def __repr__(self):
+        return str ("Object " + self.artist)
 
     def __hash__(self):
         return hash(self.artist)
@@ -115,7 +122,7 @@ def main_compare_searches(file):
     # Setup
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
-    # list_of_songobjects = list_of_songobjects[0:250000]       # Denna rad kan användas för att korta ned listan
+    list_of_songobjects = list_of_songobjects[0:250000]       # Denna rad kan användas för att korta ned listan
     n = len(list_of_songobjects)
     print("Antal element =", n)
     last = list_of_songobjects[n-1]
@@ -136,4 +143,36 @@ def main_compare_searches(file):
     print("Hashsökningen tog", round(bintid, 4), "sekunder")
 
 
-main_compare_searches("unique_tracks.txt")
+#main_compare_searches("unique_tracks.txt")
+
+# Del 3 (Sortering) --------------------------------------------------------------------------------------------------
+
+# Tar in en lista och sortrar. Kod hämtad från föreläsning.
+def urvalssortera(data):
+    n = len(data)
+    for i in range(n):
+        minst = i
+        for j in range(i + 1, n):
+            if data[j] < data[minst]:
+                minst = j
+        data[minst], data[i] = data[i], data[minst]
+
+def bubbelsortera(data):
+    n = len(data)
+    bytt = True
+    while bytt:
+        bytt = False
+        for i in range(n-1):
+            if data[i] > data[i+1]:
+                data[i], data[i+1] = data[i+1], data[i]
+                bytt = True
+    return data
+
+
+song_list = creator_of_songlistobject("unique_tracks_mini.txt")
+print(song_list)
+
+song_list = bubbelsortera(song_list)
+print(song_list)
+
+def main_compare_sorting(file):

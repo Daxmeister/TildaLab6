@@ -18,31 +18,64 @@ def create_list_of_keywords(input_file):
 
 
 
+def urvalssortera(data):
+    n = len(data)
+    for i in range(n):
+        minst = i
+        for j in range(i + 1, n):
+            if data[j] < data[minst]:
+                minst = j
+        data[minst], data[i] = data[i], data[minst]
 
 
-def binary_search(list, search_item):
-    # Skapar tre pekare, vi kommer söka mellan low och high.
-    low = 0
-    high = len(list) - 1
-    midpointer = 0
-    while low <= high:
-        midpointer = (high + low) // 2 # Hittar mitten på den delen av listan vi undersöker.
-        if list[midpointer] < search_item:  # Om värdet som finns i mitten inte passar
-            low = midpointer + 1            # kommer vi sätta nya gränser som vi undersöker.
-        elif list[midpointer] > search_item:
-            high = midpointer - 1
-        else:
-            return list[midpointer]
-    return None
+def creator_of_songlistobject(file):
+    with open(file) as song_file:
+        song_object_list = []
+        for line in song_file:
+            song_object_list.append(Song(line))
+    return song_object_list
 
+class Song():
+    def __init__(self, string):
+        list = string.split("<SEP>")
+        [i.strip() for i in list]
+        self.trackid = list[0]
+        self.song_length = list[1]
+        self.artist = list[2]
+        self.title = list[3]
 
-def main_med_fil(file):
-    list = list_reader(file)
-    #print(list)
-    keywords_list = create_list_of_keywords(file)
-    for keyword in keywords_list:
-        keyword = keyword.strip()
-        print(list, keyword, binary_search_sortofrecursive(list, keyword))
+    def __lt__(self, other):
+        return self.artist < other.artist
 
+    def __eq__(self, other):
+        return self.artist == other.artist
 
-main_med_fil("Task1_file.txt")
+    def __gt__(self, other):
+        return self.artist > other.artist
+
+    def __str__(self):
+        return self.artist
+
+    def __repr__(self):
+        return str ("Object " + self.artist)
+
+    def __hash__(self):
+        return hash(self.artist)
+
+list_of_songobjects = creator_of_songlistobject("unique_tracks_mini.txt")
+list = [2, 4, 1, 5, 2, 5]
+urvalssortera(list)
+print(list_of_songobjects)
+urvalssortera(list_of_songobjects)
+print(list_of_songobjects)
+
+def is_greater(object1, object2):
+    if object1 > object2:
+        print ("first bigger")
+    if object1 == object2:
+        print ("Is same")
+    if object1 < object2:
+        print("Second bigger")
+
+#is_greater()
+is_greater(list_of_songobjects[2], list_of_songobjects[4])
