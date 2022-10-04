@@ -67,28 +67,28 @@ class Song():
         self.title = list[3]
 
     def __lt__(self, other):
-        return self.artist < other.artist
+        return self.trackid < other.trackid
 
     def __le__(self, other):
-        return self.artist <= other.artist
+        return self.trackid <= other.trackid
 
     def __eq__(self, other):
-        return self.artist == other.artist
+        return self.trackid == other.trackid
 
     def __gt__(self, other):
-        return self.artist > other.artist
+        return self.trackid > other.trackid
 
     def __ge__(self, other):
-        return self.artist >= other.artist
+        return self.trackid >= other.trackid
 
     def __str__(self):
-        return self.artist
+        return self.trackid
 
     def __repr__(self):
-        return str ("Object " + self.artist)
+        return str ("Object " + self.trackid)
 
     def __hash__(self):
-        return hash(self.artist)
+        return hash(self.trackid)
 
 
 """ex_string = "TRMMMBB12903CB7D21<SEP>SOEYRFT12AB018936C<SEP>Kris Kross<SEP>2 Da Beat Ch'yall"
@@ -133,7 +133,7 @@ def main_compare_searches(file):
     n = len(list_of_songobjects)
     print("Antal element =", n)
     last = list_of_songobjects[n-1]
-    searched_artist = last.artist
+    searched_artist = last.trackid
 
     # Del 1
     linjtid = timeit.timeit(stmt = lambda: linear_search(list_of_songobjects, searched_artist), number = 10000)
@@ -216,7 +216,7 @@ def main_compare_sorting(file):
     # Setup
     import timeit as timeit
     list_of_songobjects = creator_of_songlistobject(file)
-    list_of_songobjects = list_of_songobjects[0:10000]  # Denna rad kan användas för att korta ned listan
+    #list_of_songobjects = list_of_songobjects[0:100000]  # Denna rad kan användas för att korta ned listan
     n = len(list_of_songobjects)
     print("Antal element =", n)
 
@@ -224,7 +224,7 @@ def main_compare_sorting(file):
     quickso = timeit.timeit(stmt=lambda: quickSort(list_of_songobjects), number=1)
     print("Quicksort tog", round(quickso, 4), "sekunder")
 
-'''    # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
+    ''' # Del 2 binärsökning börjar här. Notera att vi matar in ett object som sökes.
     list_of_songobjects.sort()
     urvsort = timeit.timeit(stmt=lambda: urvalssortera(list_of_songobjects), number=1)
     print("URvalssortering tog", round(urvsort, 4), "sekunder")'''
@@ -232,4 +232,4 @@ def main_compare_sorting(file):
 main_compare_sorting("unique_tracks.txt")
 
 
-#FÖRÄNDRINGAR
+#
